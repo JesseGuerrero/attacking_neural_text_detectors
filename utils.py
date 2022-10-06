@@ -3,10 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 import pickle
+import subprocess
 
 def load_txt(filename):
 	lines = ''
-	with open(filename) as fp:
+	with open(filename, encoding="utf-8") as fp:
 		line = fp.readline()
 		while line:
 			l = line.strip()
@@ -17,7 +18,7 @@ def load_txt(filename):
 	return lines
 
 def write_txt(filename, string):
-	with open(filename, 'w') as fp:
+	with open(filename, 'w', encoding="utf-8") as fp:
 		fp.write(string)
 	fp.close()
 
@@ -64,7 +65,7 @@ def get_results(experiment_name):
 			num_human+=1
 		else:
 			pass
-		num_changed+=np.float32(num_ch[i])
+		#num_changed+=np.float32(num_ch[i])#How many characters cut off
 
 	print('Average confidence:', np.mean(probs))
 	print('Detector accuracy:', 1. - (num_human / probs.size))
@@ -100,5 +101,16 @@ def get_graph_data(exp_name):
 
 	return x, np.asarray(asrs)
 
-
+def runcmd(cmd, verbose = False, *args, **kwargs):
+    process = subprocess.Popen(
+        cmd,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        text = True,
+        shell = True
+    )
+    std_out, std_err = process.communicate()
+    if verbose:
+        print(std_out.strip(), std_err)
+    pass
 

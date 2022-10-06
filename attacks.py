@@ -37,8 +37,11 @@ def attack(
 	misspelling_dict=None,
 	throwout = False):
 	
+	if attack_type == 'do-nothing':
+		adv_text = text
+		return (adv_text, 0)
 
-	if attack_type == 'unlimited':
+	if attack_type == 'replace-char':#Simple homogylphs
 		adv_text = text
 		for pair in homoglyphs:
 			adv_text = adv_text.replace(pair[0], pair[1])
@@ -47,9 +50,9 @@ def attack(
 			for pair in homoglyphs:
 				if char == pair[0]:
 					num_changes+=1
-		return adv_text, num_changes
+		return adv_text, num_changes#, num_changes
 
-	if attack_type == 'random_limited':
+	if attack_type == 'random-order-replace-char':
 		adv_text = ''
 		og_max_num_changes = int(max_percent_change*len(text))
 		homoglyph_indices = []
