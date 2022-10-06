@@ -65,11 +65,16 @@ def get_results(experiment_name):
 			num_human+=1
 		else:
 			pass
-		#num_changed+=np.float32(num_ch[i])#How many characters cut off
+		num_changed+=np.float32(num_ch[i])#How many characters cut off
 
+	with open(asr_pth, "a") as f:
+		f.write('\nAverage confidence:' + str(np.mean(probs)))
+		f.write('\nDetector accuracy:' + str(1. - (num_human / probs.size)))
+		f.write('\nAverage number of changes:' + str(num_changed/len(num_ch)))
+		f.write('\nNumber of Attacks Run:' + str(probs.size))
 	print('Average confidence:', np.mean(probs))
 	print('Detector accuracy:', 1. - (num_human / probs.size))
-	print('Average number of changes:', num_changed/len(num_ch))
+	print('Average number of changes:', num_changed / len(num_ch))
 	print('Number of Attacks Run:', probs.size)
 
 

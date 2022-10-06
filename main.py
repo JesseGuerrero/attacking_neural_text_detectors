@@ -23,8 +23,8 @@ Adversarial Types:
 -'random-order-replace-char': Same as replace char except the input text lines are shuffled
 -'misspelling': Replaces certain words with misspellings from misspellings.json.
 '''
-EXPERIMENT_NAME = "50_normal"
-ADVERSARIAL_TYPE = "do-nothing"
+EXPERIMENT_NAME = "50_e"
+ADVERSARIAL_TYPE = "replace-char"
 TEXT_TO_CHANGE = 50
 HOMOGLYPH_REPLACEMENT = [['e', 'е']]
 
@@ -39,7 +39,6 @@ def run_experiment(
 	throwout=False):
 
 	start_time = time.time()
-	print("max length: " + str(detector.tokenizer.max_len))
 
 
 	out_path = './experimental_results/' + experiment_name + '/'
